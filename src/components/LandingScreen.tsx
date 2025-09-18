@@ -221,7 +221,7 @@ export function LandingScreen({ onGenerate }: LandingScreenProps) {
                 >
                   <Button 
                     type="submit" 
-                    className="w-full h-14 text-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    className="w-full h-14 text-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl text-white"
                   >
                     Generate My Itinerary ✨
                   </Button>
