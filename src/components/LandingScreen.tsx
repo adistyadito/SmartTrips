@@ -55,7 +55,7 @@ export function LandingScreen({ onGenerate }: LandingScreenProps) {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-br from-blue-50 via-white to-purple-50 w-full">
       {/* Hero Section */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -160,7 +160,7 @@ export function LandingScreen({ onGenerate }: LandingScreenProps) {
                   >
                     <Label htmlFor="budget" className="flex items-center gap-2 text-gray-700">
                       <DollarSign className="w-4 h-4 text-blue-600" />
-                      Budget (USD)
+                      Budget (IDR)
                     </Label>
                     <Input
                       id="budget"
