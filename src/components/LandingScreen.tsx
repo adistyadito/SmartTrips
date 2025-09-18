@@ -186,28 +186,29 @@ export function LandingScreen({ onGenerate }: LandingScreenProps) {
                     Travel Preferences
                   </Label>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {preferences.map((preference, index) => (
-                      <motion.div 
-                        key={preference.id}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 1.2 + index * 0.1, duration: 0.3 }}
-                        className="flex items-center space-x-3 p-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer"
-                        onClick={() => handlePreferenceChange(preference.id, !formData.preferences.includes(preference.id))}
-                      >
-                        <Checkbox
-                          id={preference.id}
-                          checked={formData.preferences.includes(preference.id)}
-                          onCheckedChange={(checked) => handlePreferenceChange(preference.id, checked as boolean)}
-                        />
-                        <div className="flex items-center space-x-2">
+                    {preferences.map((preference, index) => {
+                      const selected = formData.preferences.includes(preference.id);
+                      return (
+                        <motion.div
+                          key={preference.id}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: 1.2 + index * 0.1, duration: 0.3 }}
+                          className={
+                            `flex items-center p-3 rounded-lg border transition-all cursor-pointer
+                            ${selected 
+                              ? 'bg-blue-100 border-blue-400 ring-2 ring-blue-300'
+                              : 'border-gray-200 hover:border-blue-300 hover:bg-blue-50'}`
+                          }
+                          onClick={() => handlePreferenceChange(preference.id, !selected)}
+                        >
                           <span className="text-lg">{preference.icon}</span>
-                          <Label htmlFor={preference.id} className="text-sm cursor-pointer">
+                          <Label className="text-sm cursor-pointer ml-2">
                             {preference.label}
                           </Label>
-                        </div>
-                      </motion.div>
-                    ))}
+                        </motion.div>
+                      );
+                    })}
                   </div>
                 </motion.div>
 
