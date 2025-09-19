@@ -63,17 +63,19 @@ export default function App() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className='min-h-[calc(100vh-4rem)] bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center'
+          className='min-h-[calc(100vh-4rem)] bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-[#181926] dark:via-[#23243a] dark:to-[#23243a] flex items-center justify-center'
         >
           <div className='text-center'>
             <div className='w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mx-auto mb-6 flex items-center justify-center'>
               <span className='text-4xl'>✈️</span>
             </div>
-            <h2 className='text-3xl font-bold text-gray-900 mb-4'>My Trips</h2>
-            <p className='text-gray-600 text-lg'>
+            <h2 className='text-3xl font-bold text-gray-900 dark:text-white mb-4'>
+              My Trips
+            </h2>
+            <p className='text-gray-600 dark:text-gray-300 text-lg'>
               Your saved itineraries will appear here
             </p>
-            <p className='text-gray-500 mt-2'>
+            <p className='text-gray-500 dark:text-gray-400 mt-2'>
               Start planning your first trip to see it here!
             </p>
           </div>
@@ -87,49 +89,49 @@ export default function App() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className='min-h-[calc(100vh-4rem)] bg-gradient-to-br from-blue-50 via-white to-purple-50'
+          className='min-h-[calc(100vh-4rem)] bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-[#181926] dark:via-[#23243a] dark:to-[#23243a]'
         >
           <div className='max-w-4xl mx-auto px-4 py-16'>
             <div className='text-center mb-12'>
               <div className='w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full mx-auto mb-6 flex items-center justify-center'>
                 <span className='text-4xl'>🤖</span>
               </div>
-              <h2 className='text-4xl font-bold text-gray-900 mb-4'>
+              <h2 className='text-4xl font-bold text-gray-900 dark:text-white mb-4'>
                 About AI Travel Architect
               </h2>
-              <p className='text-xl text-gray-600'>
+              <p className='text-xl text-gray-600 dark:text-gray-300'>
                 Revolutionizing travel planning with artificial intelligence
               </p>
             </div>
 
             <div className='grid md:grid-cols-2 gap-8 mb-12'>
-              <div className='bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-lg'>
-                <h3 className='text-2xl font-semibold text-gray-900 mb-4'>
+              <div className='bg-white/80 dark:bg-[rgba(35,36,58,0.90)] backdrop-blur-sm rounded-xl p-8 shadow-lg'>
+                <h3 className='text-2xl font-semibold text-gray-900 dark:text-white mb-4'>
                   🎯 Our Mission
                 </h3>
-                <p className='text-gray-600 leading-relaxed'>
+                <p className='text-gray-600 dark:text-gray-300 leading-relaxed'>
                   We believe that everyone deserves the perfect vacation. Our
                   AI-powered platform creates personalized travel itineraries
                   that match your unique preferences, budget, and timeline.
                 </p>
               </div>
 
-              <div className='bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-lg'>
-                <h3 className='text-2xl font-semibold text-gray-900 mb-4'>
+              <div className='bg-white/80 dark:bg-[rgba(35,36,58,0.90)] backdrop-blur-sm rounded-xl p-8 shadow-lg'>
+                <h3 className='text-2xl font-semibold text-gray-900 dark:text-white mb-4'>
                   ⚡ How It Works
                 </h3>
-                <p className='text-gray-600 leading-relaxed'>
+                <p className='text-gray-600 dark:text-gray-300 leading-relaxed'>
                   Simply tell us where you want to go, your budget, duration,
                   and preferences. Our AI analyzes millions of travel data
                   points to craft the perfect itinerary just for you.
                 </p>
               </div>
 
-              <div className='bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-lg'>
-                <h3 className='text-2xl font-semibold text-gray-900 mb-4'>
+              <div className='bg-white/80 dark:bg-[rgba(35,36,58,0.90)] backdrop-blur-sm rounded-xl p-8 shadow-lg'>
+                <h3 className='text-2xl font-semibold text-gray-900 dark:text-white mb-4'>
                   🌟 Features
                 </h3>
-                <ul className='text-gray-600 space-y-2'>
+                <ul className='text-gray-600 dark:text-gray-300 space-y-2'>
                   <li>• Personalized recommendations</li>
                   <li>• Real-time budget tracking</li>
                   <li>• Local insights and hidden gems</li>
@@ -137,11 +139,11 @@ export default function App() {
                 </ul>
               </div>
 
-              <div className='bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-lg'>
-                <h3 className='text-2xl font-semibold text-gray-900 mb-4'>
+              <div className='bg-white/80 dark:bg-[rgba(35,36,58,0.90)] backdrop-blur-sm rounded-xl p-8 shadow-lg'>
+                <h3 className='text-2xl font-semibold text-gray-900 dark:text-white mb-4'>
                   🔒 Your Privacy
                 </h3>
-                <p className='text-gray-600 leading-relaxed'>
+                <p className='text-gray-600 dark:text-gray-300 leading-relaxed'>
                   Your data is safe with us. We use advanced encryption and
                   never share your personal information with third parties. Your
                   travel dreams are private and secure.
@@ -150,7 +152,7 @@ export default function App() {
             </div>
 
             <div className='text-center'>
-              <h3 className='text-2xl font-semibold text-gray-900 mb-4'>
+              <h3 className='text-2xl font-semibold text-gray-900 dark:text-white mb-4'>
                 Ready to Start Planning?
               </h3>
               <button
@@ -167,7 +169,7 @@ export default function App() {
   };
 
   return (
-    <div className='min-h-screen bg-white'>
+    <div className='min-h-screen bg-background transition-colors'>
       <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
       {renderContent()}
     </div>
