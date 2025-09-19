@@ -85,7 +85,7 @@ export function ResultsScreen({ formData, onBack }: ResultsScreenProps) {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-[calc(100vh-4rem)] bg-background transition-colors">
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Header */}
         <motion.div 
@@ -101,7 +101,7 @@ export function ResultsScreen({ formData, onBack }: ResultsScreenProps) {
             <ArrowLeft className="w-4 h-4" />
             Back to Search
           </Button>
-          <h1 className="text-3xl font-bold text-gray-900">Your Personalized Itinerary</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Your Personalized Itinerary</h1>
         </motion.div>
 
         {/* Summary Card */}
@@ -110,7 +110,7 @@ export function ResultsScreen({ formData, onBack }: ResultsScreenProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <Card className="mb-8 shadow-lg border-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+          <Card className="mb-8 shadow-lg border-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white dark:bg-gradient-to-r dark:from-blue-700 dark:to-purple-800">
             <CardContent className="p-6">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div className="flex items-center gap-3">
@@ -171,14 +171,14 @@ export function ResultsScreen({ formData, onBack }: ResultsScreenProps) {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 + index * 0.1 }}
             >
-              <Card className="shadow-lg border-0 bg-white/90 backdrop-blur-sm hover:shadow-xl transition-shadow">
+              <Card className="shadow-lg border-0 bg-white/90 dark:bg-[rgba(35,36,58,0.90)] backdrop-blur-sm hover:shadow-xl transition-shadow">
                 <CardHeader className="pb-4">
                   <div className="flex justify-between items-start">
                     <div>
-                      <CardTitle className="text-2xl text-gray-900 mb-1">
+                      <CardTitle className="text-2xl text-gray-900 dark:text-white mb-1">
                         Day {day.day}
                       </CardTitle>
-                      <p className="text-gray-600">{day.title}</p>
+                      <p className="text-gray-600 dark:text-gray-300">{day.title}</p>
                     </div>
                     <div className="text-right">
                       <p className="text-sm text-gray-500">Daily Cost</p>
@@ -195,7 +195,10 @@ export function ResultsScreen({ formData, onBack }: ResultsScreenProps) {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 + index * 0.1 + activityIndex * 0.05 }}
-                        className="flex items-start gap-4 p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
+                        className="flex items-start gap-4 p-4 rounded-lg 
+  bg-gray-50 hover:bg-gray-100 
+  dark:bg-[rgba(255,255,255,0.04)] dark:hover:bg-[rgba(255,255,255,0.10)] 
+  transition-colors"
                       >
                         <div className="flex items-center gap-2 text-blue-600 min-w-fit">
                           <Clock className="w-4 h-4" />
@@ -203,8 +206,8 @@ export function ResultsScreen({ formData, onBack }: ResultsScreenProps) {
                         </div>
                         
                         <div className="flex-1">
-                          <h4 className="font-semibold text-gray-900 mb-1">{activity.title}</h4>
-                          <p className="text-gray-600 text-sm mb-2">{activity.description}</p>
+                          <h4 className="font-semibold text-gray-900 dark:text-white mb-1">{activity.title}</h4>
+                          <p className="text-gray-600 dark:text-gray-300 text-sm mb-2">{activity.description}</p>
                           <div className="flex items-center gap-4">
                             <div className="flex items-center gap-1">
                               <Star className="w-4 h-4 text-yellow-500 fill-current" />
@@ -233,7 +236,7 @@ export function ResultsScreen({ formData, onBack }: ResultsScreenProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <Card className="shadow-lg border-0 bg-gradient-to-r from-green-600 to-emerald-600 text-white">
+          <Card className="shadow-lg border-0 bg-gradient-to-r from-green-600 to-emerald-600 text-white dark:bg-gradient-to-r dark:from-green-700 dark:to-emerald-800">
             <CardContent className="p-8 text-center">
               <h2 className="text-3xl font-bold mb-4">Ready to Book Your Adventure?</h2>
               <p className="text-green-100 mb-6 text-lg">
