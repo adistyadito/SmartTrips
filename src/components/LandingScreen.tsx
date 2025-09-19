@@ -55,7 +55,12 @@ export function LandingScreen({ onGenerate }: LandingScreenProps) {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-br from-blue-50 via-white to-purple-50 w-full">
+    <div className="
+      min-h-[calc(100vh-4rem)]
+      bg-gradient-to-br from-blue-50 via-white to-purple-50
+      dark:bg-gradient-to-br dark:from-[#181926] dark:via-[#23243a] dark:to-[#23243a]
+      transition-colors w-full
+    ">
       {/* Hero Section */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -99,10 +104,14 @@ export function LandingScreen({ onGenerate }: LandingScreenProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
         >
-          <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm">
+          <Card className="shadow-2xl border-0 bg-white/90 dark:bg-[rgba(35,36,58,0.90)] backdrop-blur-sm">
             <CardHeader className="text-center pb-8">
-              <CardTitle className="text-3xl text-gray-900 mb-2">Plan Your Perfect Trip</CardTitle>
-              <p className="text-gray-600">Tell us about your dream destination and we'll create a personalized itinerary</p>
+              <CardTitle className="text-3xl text-gray-900 dark:text-white mb-2">
+                Plan Your Perfect Trip
+              </CardTitle>
+              <p className="text-gray-600 dark:text-gray-300">
+                Tell us about your dream destination and we'll create a personalized itinerary
+              </p>
             </CardHeader>
             
             <CardContent>
@@ -114,7 +123,7 @@ export function LandingScreen({ onGenerate }: LandingScreenProps) {
                   transition={{ delay: 0.8, duration: 0.5 }}
                   className="space-y-2"
                 >
-                  <Label htmlFor="destination" className="flex items-center gap-2 text-gray-700">
+                  <Label htmlFor="destination" className="flex items-center gap-2 text-gray-700 dark:text-gray-100">
                     <MapPin className="w-4 h-4 text-blue-600" />
                     Destination
                   </Label>
@@ -136,7 +145,7 @@ export function LandingScreen({ onGenerate }: LandingScreenProps) {
                     transition={{ delay: 0.9, duration: 0.5 }}
                     className="space-y-2"
                   >
-                    <Label htmlFor="duration" className="flex items-center gap-2 text-gray-700">
+                    <Label htmlFor="duration" className="flex items-center gap-2 text-gray-700 dark:text-gray-100">
                       <Calendar className="w-4 h-4 text-blue-600" />
                       Duration (days)
                     </Label>
@@ -158,7 +167,7 @@ export function LandingScreen({ onGenerate }: LandingScreenProps) {
                     transition={{ delay: 1.0, duration: 0.5 }}
                     className="space-y-2"
                   >
-                    <Label htmlFor="budget" className="flex items-center gap-2 text-gray-700">
+                    <Label htmlFor="budget" className="flex items-center gap-2 text-gray-700 dark:text-gray-100">
                       <DollarSign className="w-4 h-4 text-blue-600" />
                       Budget (IDR)
                     </Label>
@@ -181,7 +190,7 @@ export function LandingScreen({ onGenerate }: LandingScreenProps) {
                   transition={{ delay: 1.1, duration: 0.5 }}
                   className="space-y-4"
                 >
-                  <Label className="flex items-center gap-2 text-gray-700">
+                  <Label className="flex items-center gap-2 text-gray-700 dark:text-gray-100">
                     <Heart className="w-4 h-4 text-blue-600" />
                     Travel Preferences
                   </Label>
@@ -219,9 +228,17 @@ export function LandingScreen({ onGenerate }: LandingScreenProps) {
                   transition={{ delay: 1.5, duration: 0.5 }}
                   className="pt-4"
                 >
-                  <Button 
-                    type="submit" 
-                    className="w-full h-14 text-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl text-white"
+                  <Button
+                    type="submit"
+                    className="
+                      w-full h-14 text-lg
+                      bg-white text-blue-700
+                      hover:bg-blue-50
+                      dark:bg-gradient-to-r dark:from-blue-600 dark:to-purple-600
+                      dark:text-white
+                      dark:hover:from-blue-700 dark:hover:to-purple-700
+                      transition-all duration-300 shadow-lg hover:shadow-xl
+                    "
                   >
                     Generate My Itinerary ✨
                   </Button>
