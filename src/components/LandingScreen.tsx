@@ -150,7 +150,8 @@ export function LandingScreen({ onGenerate }: LandingScreenProps) {
                 ) : (
                   <MapPin className='w-4 h-4' />
                 )}
-                Switch to {mode === 'manual' ? 'Auto Mode' : 'Manual Mode'}
+                {/* Ganti label di sini */}
+                {mode === 'manual' ? 'Get a Quick Plan' : 'Fine-tune Your Trip'}
               </Button>
             </CardHeader>
             <CardContent>
