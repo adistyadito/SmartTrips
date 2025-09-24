@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Navbar } from './components/Navbar';
 import { LandingScreen } from './components/LandingScreen';
 import { ResultsScreen } from './components/ResultsScreen';
+import { LLMLoadingScreen } from './components/LLMLoadingScreen';
 
 interface FormData {
   destination: string;
@@ -13,13 +14,17 @@ interface FormData {
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('home');
-  const [currentScreen, setCurrentScreen] = useState<'landing' | 'results'>(
+  const [currentScreen, setCurrentScreen] = useState<'landing' | 'loading' | 'results'>(
     'landing'
   );
   const [formData, setFormData] = useState<FormData | null>(null);
 
   const handleGenerate = (data: FormData) => {
     setFormData(data);
+    setCurrentScreen('loading');
+  };
+
+  const handleLoadingComplete = () => {
     setCurrentScreen('results');
   };
 
@@ -41,6 +46,19 @@ export default function App() {
               className='flex justify-center items-center'
             >
               <LandingScreen onGenerate={handleGenerate} />
+            </motion.div>
+          ) : currentScreen === 'loading' ? (
+            <motion.div
+              key='loading'
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <LLMLoadingScreen 
+                isVisible={true} 
+                onComplete={handleLoadingComplete}
+              />
             </motion.div>
           ) : (
             <motion.div

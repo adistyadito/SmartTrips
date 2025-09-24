@@ -47,10 +47,10 @@ export function LandingScreen({ onGenerate }: LandingScreenProps) {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.destination.trim()) {
-      onGenerate(formData);
+      onGenerate(formData); // Langsung panggil onGenerate tanpa loading di sini
     }
   };
 

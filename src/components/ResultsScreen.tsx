@@ -35,28 +35,60 @@ export function ResultsScreen({ formData, onBack }: ResultsScreenProps) {
   // Generate mock itinerary data based on form inputs
   const generateItinerary = (): DayItinerary[] => {
     const activities = [
-      { time: '9:00 AM', title: 'Historic City Center Tour', description: 'Explore the charming old town with a local guide', cost: 25, rating: 4.8 },
-      { time: '11:30 AM', title: 'Local Market Visit', description: 'Sample fresh produce and local specialties', cost: 15, rating: 4.6 },
-      { time: '1:00 PM', title: 'Traditional Lunch', description: 'Authentic local cuisine at a family-run restaurant', cost: 35, rating: 4.9 },
-      { time: '3:00 PM', title: 'Museum & Art Gallery', description: 'Discover local history and contemporary art', cost: 18, rating: 4.7 },
-      { time: '6:00 PM', title: 'Sunset Viewpoint', description: 'Panoramic views of the city at golden hour', cost: 0, rating: 4.9 },
-      { time: '8:00 PM', title: 'Dinner & Cultural Show', description: 'Traditional performance with dinner', cost: 45, rating: 4.5 },
-      { time: '10:00 AM', title: 'Adventure Activity', description: 'Hiking, biking, or water sports', cost: 60, rating: 4.8 },
-      { time: '2:00 PM', title: 'Spa & Wellness', description: 'Relaxation and traditional treatments', cost: 80, rating: 4.7 },
-      { time: '4:00 PM', title: 'Shopping District', description: 'Local crafts and souvenirs', cost: 50, rating: 4.4 },
-      { time: '7:00 PM', title: 'Food Tour', description: 'Street food and local delicacies', cost: 40, rating: 4.8 }
+      { time: '8:00 AM', title: 'Adventure Activity', description: 'Hiking up Mount Batur for sunrise', location: 'Mount Batur', cost: 500_000, rating: 4.8 },
+      { time: '10:00 AM', title: 'Historic City Center Tour', description: 'Explore the charming streets and temples of Ubud', location: 'Ubud', cost: 250_000, rating: 4.8 },
+      { time: '11:30 AM', title: 'Local Market Visit', description: 'Sample fresh produce and local crafts', location: 'Ubud Market', cost: 150_000, rating: 4.6 },
+      { time: '12:30 PM', title: 'Traditional Lunch', description: 'Enjoy authentic Balinese cuisine at a family-run restaurant', location: 'Warung Babi Guling Ibu Oka', cost: 350_000, rating: 4.9 },
+      { time: '2:00 PM', title: 'Spa & Wellness', description: 'Relax with traditional Balinese massage', location: 'Tjampuhan Spa', cost: 800_000, rating: 4.7 },
+      { time: '3:30 PM', title: 'Museum & Art Gallery', description: 'Discover local art and history', location: 'Agung Rai Museum of Art', cost: 180_000, rating: 4.7 },
+      { time: '4:30 PM', title: 'Shopping District', description: 'Shop for local crafts and souvenirs', location: 'Ubud Art Market', cost: 500_000, rating: 4.4 },
+      { time: '5:30 PM', title: 'Sunset Viewpoint', description: 'Watch the sunset over the ocean', location: 'Tanah Lot Temple', cost: 100_000, rating: 4.9 },
+      { time: '6:30 PM', title: 'Food Tour', description: 'Taste street food and local delicacies', location: 'Seminyak Street Food', cost: 400_000, rating: 4.8 },
+      { time: '8:00 PM', title: 'Dinner & Cultural Show', description: 'Enjoy traditional dance performance while dining', location: 'Bali Nusa Dua Theatre', cost: 450_000, rating: 4.5 }
     ];
 
     const itinerary: DayItinerary[] = [];
     const dailyBudget = formData.budget / formData.duration;
-    
+    const budgetFactor = 0.85; // 85% dari budget, agar pasti < budget
+
+    let accumulatedCost = 0;
+
     for (let day = 1; day <= formData.duration; day++) {
-      const dayActivities = activities
+      let dayActivities = activities
         .sort(() => 0.5 - Math.random())
         .slice(0, Math.floor(Math.random() * 3) + 3);
-      
-      const totalCost = dayActivities.reduce((sum, activity) => sum + activity.cost, 0);
-      
+
+      let totalCost = dayActivities.reduce((sum, activity) => sum + activity.cost, 0);
+      const maxAllowed = Math.max(0, formData.budget * budgetFactor - accumulatedCost);
+
+      // Jika sisa budget terlalu kecil, kurangi jumlah aktivitas
+      while (
+        (totalCost > maxAllowed || dayActivities.length * 250_000 > maxAllowed) &&
+        dayActivities.length > 1
+      ) {
+        dayActivities.pop();
+        totalCost = dayActivities.reduce((sum, activity) => sum + activity.cost, 0);
+      }
+
+      // Jika masih kelebihan, proporsional, tapi minimal 250.000 per aktivitas
+      if (totalCost > maxAllowed && totalCost > 0) {
+        const minCost = 250_000;
+        let remaining = maxAllowed;
+        const n = dayActivities.length;
+        dayActivities = dayActivities.map((a, i) => {
+          // Bagi proporsional, tapi minimal 250.000
+          let prop = Math.floor((a.cost / totalCost) * maxAllowed);
+          if (prop < minCost) prop = minCost;
+          // Untuk aktivitas terakhir, ambil sisa
+          if (i === n - 1) prop = Math.max(minCost, remaining);
+          remaining -= prop;
+          return { ...a, cost: prop };
+        });
+        totalCost = dayActivities.reduce((sum, activity) => sum + activity.cost, 0);
+      }
+
+      accumulatedCost += totalCost;
+
       itinerary.push({
         day,
         title: day === 1 ? 'Arrival & City Exploration' : 
@@ -66,7 +98,7 @@ export function ResultsScreen({ formData, onBack }: ResultsScreenProps) {
         totalCost
       });
     }
-    
+
     return itinerary;
   };
 
@@ -83,6 +115,19 @@ export function ResultsScreen({ formData, onBack }: ResultsScreenProps) {
     shopping: 'Shopping',
     relaxation: 'Relaxation & Spa'
   };
+
+  // Helper untuk konversi waktu string ke Date (untuk sorting)
+  function parseTime(timeStr: string) {
+    const [time, modifier] = timeStr.split(' ');
+    let [hours, minutes] = time.split(':').map(Number);
+    if (modifier === 'PM' && hours !== 12) hours += 12;
+    if (modifier === 'AM' && hours === 12) hours = 0;
+    return hours * 60 + minutes;
+  }
+
+  function formatRupiah(num: number) {
+    return num.toLocaleString('id-ID');
+  }
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-background transition-colors">
@@ -133,7 +178,7 @@ export function ResultsScreen({ formData, onBack }: ResultsScreenProps) {
                   <DollarSign className="w-8 h-8 text-blue-200" />
                   <div>
                     <p className="text-blue-100 text-sm">Budget</p>
-                    <p className="text-xl font-semibold">${formData.budget}</p>
+                    <p className="text-xl font-semibold">Rp {formatRupiah(formData.budget)}</p>
                   </div>
                 </div>
                 
@@ -141,7 +186,7 @@ export function ResultsScreen({ formData, onBack }: ResultsScreenProps) {
                   <Star className="w-8 h-8 text-blue-200" />
                   <div>
                     <p className="text-blue-100 text-sm">Est. Total Cost</p>
-                    <p className="text-xl font-semibold">${totalCost}</p>
+                    <p className="text-xl font-semibold">Rp {formatRupiah(totalCost)}</p>
                   </div>
                 </div>
               </div>
@@ -182,47 +227,50 @@ export function ResultsScreen({ formData, onBack }: ResultsScreenProps) {
                     </div>
                     <div className="text-right">
                       <p className="text-sm text-gray-500">Daily Cost</p>
-                      <p className="text-xl font-semibold text-green-600">${day.totalCost}</p>
+                      <p className="text-xl font-semibold text-green-600">Rp {formatRupiah(day.totalCost)}</p>
                     </div>
                   </div>
                 </CardHeader>
                 
                 <CardContent>
                   <div className="space-y-4">
-                    {day.activities.map((activity, activityIndex) => (
-                      <motion.div
-                        key={activityIndex}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 + index * 0.1 + activityIndex * 0.05 }}
-                        className="flex items-start gap-4 p-4 rounded-lg 
+                    {day.activities
+                      .slice() // copy array agar tidak mutasi original
+                      .sort((a, b) => parseTime(a.time) - parseTime(b.time))
+                      .map((activity, activityIndex) => (
+                        <motion.div
+                          key={activityIndex}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.3 + index * 0.1 + activityIndex * 0.05 }}
+                          className="flex items-start gap-4 p-4 rounded-lg 
   bg-gray-50 hover:bg-gray-100 
   dark:bg-[rgba(255,255,255,0.04)] dark:hover:bg-[rgba(255,255,255,0.10)] 
   transition-colors"
-                      >
-                        <div className="flex items-center gap-2 text-blue-600 min-w-fit">
-                          <Clock className="w-4 h-4" />
-                          <span className="font-medium">{activity.time}</span>
-                        </div>
-                        
-                        <div className="flex-1">
-                          <h4 className="font-semibold text-gray-900 dark:text-white mb-1">{activity.title}</h4>
-                          <p className="text-gray-600 dark:text-gray-300 text-sm mb-2">{activity.description}</p>
-                          <div className="flex items-center gap-4">
-                            <div className="flex items-center gap-1">
-                              <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                              <span className="text-sm font-medium">{activity.rating}</span>
-                            </div>
-                            <div className="text-sm">
-                              <span className="text-gray-500">Cost: </span>
-                              <span className="font-semibold text-green-600">
-                                ${activity.cost === 0 ? 'Free' : activity.cost}
-                              </span>
+                        >
+                          <div className="flex items-center gap-2 text-blue-600 min-w-fit">
+                            <Clock className="w-4 h-4" />
+                            <span className="font-medium">{activity.time}</span>
+                          </div>
+                          
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-gray-900 dark:text-white mb-1">{activity.title}</h4>
+                            <p className="text-gray-600 dark:text-gray-300 text-sm mb-2">{activity.description}</p>
+                            <div className="flex items-center gap-4">
+                              <div className="flex items-center gap-1">
+                                <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                                <span className="text-sm font-medium">{activity.rating}</span>
+                              </div>
+                              <div className="text-sm">
+                                <span className="text-gray-500">Cost: </span>
+                                <span className="font-semibold text-green-600">
+                                  Rp {activity.cost === 0 ? 'Free' : formatRupiah(activity.cost)}
+                                </span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </motion.div>
-                    ))}
+                        </motion.div>
+                      ))}
                   </div>
                 </CardContent>
               </Card>
